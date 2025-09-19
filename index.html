@@ -5,33 +5,44 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Feliz Cumpleaños Ali!</title>
   <style>
-    html, body {
-      margin: 0;
-      height: 100%;
-      background: #000;
-    }
-    /* Fill the entire viewport; prevents the “zoomed in” issue */
-    .frame {
-      position: fixed;
-      inset: 0;
-    }
-    .frame iframe {
-      width: 100%;
-      height: 100%;
-      border: 0;
-      display: block;
-    }
+    html, body { margin: 0; height: 100%; background: #000; }
+    .frame { position: fixed; inset: 0; }
+    .frame #player { width: 100%; height: 100%; display: block; }
   </style>
 </head>
 <body>
   <div class="frame">
-    <iframe
-      src="https://www.youtube-nocookie.com/embed/nu4HUwvY54U?autoplay=1&mute=1&playsinline=1&rel=0&modestbranding=1"
-      title="Feliz Cumpleaños Ali!"
-      allow="autoplay; encrypted-media; picture-in-picture"
-      allowfullscreen
-      referrerpolicy="strict-origin-when-cross-origin">
-    </iframe>
+    <div id="player"></div>
   </div>
+
+  <script>
+    // 1) Load YouTube IFrame API
+    var tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    document.head.appendChild(tag);
+
+    // 2) Create the player when API is ready
+    var player;
+    function onYouTubeIframeAPIReady() {
+      player = new YT.Player('player', {
+        videoId: 'nu4HUwvY54U', // your video ID
+        playerVars: {
+          autoplay: 1,
+          mute: 1,
+          playsinline: 1,
+          rel: 0,
+          modestbranding: 1
+        },
+        events: {
+          onReady: function () {
+            try {
+              player.mute();
+              player.playVideo();
+            } catch (e) {}
+          }
+        }
+      });
+    }
+  </script>
 </body>
 </html>
